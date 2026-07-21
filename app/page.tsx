@@ -17,7 +17,7 @@ const WAITING_LINES = [
   "Isolating genuine sentiment…",
   "Cross-referencing what was said with what was meant…",
   "Recovering deleted honesty…",
-  "Measuring sincerity levels… low.",
+  "Measuring sincerity levels…",
   "Consulting the sender's true intentions…",
 ];
 
