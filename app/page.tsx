@@ -251,7 +251,6 @@ export default function Home() {
           inadvisable.
         </p>
         <div className="flex items-center gap-2.5">
-          <span>Developed by Phureewat A</span>
           <a
             href="https://github.com/phureewat29"
             target="_blank"
