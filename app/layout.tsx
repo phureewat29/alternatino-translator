@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description:
       "Every message arrives with feelings attached. We expose them.",
     type: "website",
-    images: [{ url: "/cover.jpg", width: 1728, height: 1226 }],
+    images: [{ url: "/cover.jpg", width: 1728, height: 904 }],
   },
   twitter: {
     card: "summary_large_image",
