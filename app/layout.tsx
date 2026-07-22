@@ -18,9 +18,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://translator.morroc.ai"),
   title: "Translator™",
   description:
     "Every message arrives with feelings attached. We expose them.",
+  openGraph: {
+    title: "Translator™",
+    description:
+      "Every message arrives with feelings attached. We expose them.",
+    type: "website",
+    images: [{ url: "/cover.jpg", width: 1728, height: 1226 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/cover.jpg"],
+  },
 };
 
 export default function RootLayout({

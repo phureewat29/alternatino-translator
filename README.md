@@ -1,5 +1,9 @@
 # Alternatino Translator™
 
+<p align="center">
+  <img src="https://translator.morroc.ai/cover.jpg" alt="Translator app — every message arrives with feelings attached" width="720" />
+</p>
+
 Every message arrives with feelings attached. Translator exposes them.
 
 Paste any message from your workday: a polite email, a careful chat, a "gentle reminder" from a colleague. Translator rewrites it as what the sender really meant. The manners go; the facts stay.
