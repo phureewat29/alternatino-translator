@@ -92,3 +92,8 @@ body {
   background: var(--accent);
   color: var(--accent-foreground);
 }
+
+.tweet-embed .react-tweet-theme {
+  --tweet-container-margin: 0;
+  max-width: none;
+}

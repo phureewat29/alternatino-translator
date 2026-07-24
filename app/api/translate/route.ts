@@ -1,13 +1,16 @@
-import { SYSTEM_PROMPT } from "@/lib/prompt";
+import { SYSTEM_PROMPT, POST_SYSTEM_PROMPT } from "@/lib/prompt";
 
 const GENERIC_ERROR = "Something got lost in translation. Try again.";
 const MAX_INPUT_LENGTH = 4000;
+const MAX_CONTEXT_LENGTH = 8000;
 const DEFAULT_MODEL = "x-ai/grok-4.5";
 
 export async function POST(req: Request) {
   let text: unknown;
+  let mode: unknown;
+  let context: unknown;
   try {
-    ({ text } = await req.json());
+    ({ text, mode, context } = await req.json());
   } catch {
     return new Response(GENERIC_ERROR, { status: 400 });
   }
@@ -20,9 +23,28 @@ export async function POST(req: Request) {
     return new Response(GENERIC_ERROR, { status: 400 });
   }
 
+  if (mode !== undefined && mode !== "post") {
+    return new Response(GENERIC_ERROR, { status: 400 });
+  }
+
+  if (
+    context !== undefined &&
+    (typeof context !== "string" || context.length > MAX_CONTEXT_LENGTH)
+  ) {
+    return new Response(GENERIC_ERROR, { status: 400 });
+  }
+
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     return new Response(GENERIC_ERROR, { status: 500 });
+  }
+
+  // context only ever joins the system message — the user message stays
+  // bare `text` so the prompt-injection defense (never trust user content
+  // as instructions) is unaffected.
+  let systemPrompt = mode === "post" ? POST_SYSTEM_PROMPT : SYSTEM_PROMPT;
+  if (context) {
+    systemPrompt += `\n\nThread context (oldest first):\n${context}`;
   }
 
   const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -38,7 +60,7 @@ export async function POST(req: Request) {
       stream: true,
       temperature: 0.9,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         { role: "user", content: text },
       ],
     }),
