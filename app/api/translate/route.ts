@@ -2,7 +2,7 @@ import { SYSTEM_PROMPT } from "@/lib/prompt";
 
 const GENERIC_ERROR = "Something got lost in translation. Try again.";
 const MAX_INPUT_LENGTH = 4000;
-const DEFAULT_MODEL = "grok-4.5";
+const DEFAULT_MODEL = "x-ai/grok-4.5";
 
 export async function POST(req: Request) {
   let text: unknown;
@@ -20,19 +20,21 @@ export async function POST(req: Request) {
     return new Response(GENERIC_ERROR, { status: 400 });
   }
 
-  const apiKey = process.env.XAI_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     return new Response(GENERIC_ERROR, { status: 500 });
   }
 
-  const upstream = await fetch("https://api.x.ai/v1/chat/completions", {
+  const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
+      "HTTP-Referer": "https://translator.morroc.ai",
+      "X-Title": "Translator",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: process.env.XAI_MODEL || DEFAULT_MODEL,
+      model: process.env.OPENROUTER_MODEL || DEFAULT_MODEL,
       stream: true,
       temperature: 0.9,
       messages: [

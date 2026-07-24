@@ -14,11 +14,11 @@ Inspired by the translator sketch from [Alternatino](https://www.youtube.com/wat
 
 ## Setup
 
-You need an [x.ai](https://x.ai) API key.
+You need an [OpenRouter](https://openrouter.ai) API key.
 
 1. Copy `.env.example` to `.env.local`.
-2. Put your key in `XAI_API_KEY`.
-3. To use another model, set `XAI_MODEL`. The default is `grok-4.5`, which writes fluently toxic.
+2. Put your key in `OPENROUTER_API_KEY`.
+3. To use another model, set `OPENROUTER_MODEL`. The default is `x-ai/grok-4.5`, which writes fluently toxic.
 
 The key stays on the server. Visitors never see it, the provider, or the model, even in error messages.
 
